@@ -1,0 +1,66 @@
+{
+  "name": "apollo-link-gun",
+  "version": "0.0.1",
+  "description": "Use gundb as backend for ApolloClient",
+  "author": "Bryan Goldstein <brysgo@gmail.com>",
+  "license": "MIT",
+  "main": "./lib/bundle.umd.js",
+  "module": "./lib/index.js",
+  "jsnext:main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brysgo/apollo-link-gun.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brysgo/apollo-link-gun/issues"
+  },
+  "homepage": "https://github.com/brysgo/apollo-link-gun#readme",
+  "scripts": {
+    "build:browser": "browserify ./lib/bundle.umd.js -o=./lib/bundle.js --i apollo-link && npm run minify:browser",
+    "build": "tsc -p .",
+    "bundle": "rollup -c",
+    "clean": "rimraf lib/* && rimraf coverage/*",
+    "coverage": "jest --coverage",
+    "filesize": "npm run build && npm run build:browser",
+    "lint": "tslint --type-check -p tsconfig.json -c ../../tslint.json src/*.ts",
+    "minify:browser": "uglifyjs -c -m -o ./lib/bundle.min.js -- ./lib/bundle.js",
+    "postbuild": "npm run bundle",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "jest",
+    "watch": "tsc -w -p . & rollup -c -w"
+  },
+  "dependencies": {
+    "apollo-link": "^1.2.2",
+    "graphql-gun": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/graphql": "0.12.6",
+    "@types/jest": "22.2.2",
+    "browserify": "16.1.1",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.8.0",
+    "graphql-tools": "2.23.1",
+    "jest": "22.4.3",
+    "rimraf": "2.6.1",
+    "rollup": "0.57.1",
+    "ts-jest": "21.2.4",
+    "tslint": "5.9.1",
+    "typescript": "2.7.2",
+    "uglify-js": "3.3.16"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "mapCoverage": true
+  }
+}
