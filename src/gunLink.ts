@@ -1,5 +1,5 @@
 import { ApolloLink, Operation, FetchResult, Observable } from "apollo-link";
-import * as graphqlGun from "graphql-gun"
+import graphqlGun from "graphql-gun";
 
 export namespace GunLink {
   export type ResolverContextFunction = (
@@ -28,20 +28,22 @@ export class GunLink extends ApolloLink {
   }
 
   public request(operation: Operation): Observable<FetchResult> | null {
-    return new Observable<FetchResult>(async observer => {
-      // TODO: check schema
-      try {
-        for await (const data of graphqlGun(operation.query, this.gun)) {
+    return new Observable<FetchResult>(observer => {
+      async () => {
+        // TODO: check schema
+        try {
+          for await (const data of graphqlGun(operation.query, this.gun)) {
+            if (!observer.closed) {
+              observer.next({ data });
+            }
+          }
+          observer.complete();
+        } catch (e) {
           if (!observer.closed) {
-            observer.next({data});
+            observer.error(e);
           }
         }
-        observer.complete();
-      } catch (e) {
-        if (!observer.closed) {
-          observer.error(e);
-        }
-      }
+      };
     });
   }
 }
