@@ -3,6 +3,8 @@ title: apollo-link-gun
 description: Use graphql-gun with Apollo
 ---
 
+[![CircleCI](https://circleci.com/gh/brysgo/apollo-link-gun.svg?style=svg)](https://circleci.com/gh/brysgo/apollo-link-gun)
+
 The gun link provides a [connection to gundb](https://github.com/amark/gun), via the `graphql-gun` package.
 
 ## Installation
