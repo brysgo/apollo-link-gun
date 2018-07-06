@@ -60,7 +60,6 @@
       "tsx",
       "js",
       "json"
-    ],
-    "mapCoverage": true
+    ]
   }
 }
