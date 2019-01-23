@@ -3,7 +3,7 @@ title: apollo-link-gun
 description: Use graphql-gun with Apollo
 ---
 
-[![CircleCI](https://circleci.com/gh/brysgo/apollo-link-gun.svg?style=svg)](https://circleci.com/gh/brysgo/apollo-link-gun)
+[![CircleCI](https://circleci.com/gh/brysgo/apollo-link-gun.svg?style=svg)](https://circleci.com/gh/brysgo/apollo-link-gun) [![Greenkeeper badge](https://badges.greenkeeper.io/brysgo/apollo-link-gun.svg)](https://greenkeeper.io/)
 
 The gun link provides a [connection to gundb](https://github.com/amark/gun), via the `graphql-gun` package.
 
