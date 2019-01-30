@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "apollo-link": "^1.2.2",
-    "graphql-gun": "^0.3.0"
+    "graphql-gun": "^1.0.0"
   },
   "devDependencies": {
     "@types/jest": "23.3.13",
