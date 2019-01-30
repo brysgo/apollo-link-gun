@@ -1475,10 +1475,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "3.1.0"
   resolved "https://codeload.github.com/brysgo/graphql-anywhere/tar.gz/6fbc9bca45ee546dff44e53464bf173a3bf6003b"
 
-graphql-gun@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/graphql-gun/-/graphql-gun-0.3.0.tgz#04fd1bf5c0d34ea1236d8dbaa5c494ce33c1d7cc"
-  integrity sha512-SUDLczNl3TM+RLrixb51M7xU3jI/5grZ+20qOczW4ogwejQ+8nCMOUwZDsCmG4ejNCZtpLzBWLdDsoWMAwzLlA==
+graphql-gun@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/graphql-gun/-/graphql-gun-1.0.0.tgz#c03f9c6ba3fd4c032ea12cfcddf51842fda718fb"
+  integrity sha512-xC65Gda5N96ytU90fV1GUwfY37qLthpuaWb9y62cMxEJTtLmAuMN45G+1IyHqmQABwOcEop4iibJXO2xYHpsmw==
   dependencies:
     graphql-anywhere "github:brysgo/graphql-anywhere#graphql-gun"
     gun "^0.9.999998"
