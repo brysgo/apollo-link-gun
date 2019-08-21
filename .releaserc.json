@@ -8,6 +8,6 @@
         {"path": "lib/bundle.umd.js", "label": "JS distribution"},
         {"path": "lib/bundle.umd.js.map", "label": "JS sourcemap"}
       ]
-    }],
+    }]
   ]
 }
