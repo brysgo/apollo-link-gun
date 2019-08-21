@@ -29,8 +29,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: |
-          yarn global add semantic-release @semantic-release/github @semantic-release/npm
-          semantic-release
+          npm install @semantic-release/github @semantic-release/npm
+          npx semantic-release
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
