@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v1
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
