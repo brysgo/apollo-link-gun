@@ -22,12 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: npm install @semantic-release/github @semantic-release/npm
-      - run: npx semantic-release
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - run: |
+          npm install @semantic-release/github @semantic-release/npm
+          npx semantic-release
 
