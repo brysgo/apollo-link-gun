@@ -36,7 +36,7 @@
     "graphql-gun": "^1.0.0"
   },
   "devDependencies": {
-    "@types/jest": "24.0.18",
+    "@types/jest": "24.0.22",
     "browserify": "16.2.3",
     "graphql": "14.5.8",
     "graphql-tag": "2.10.1",
