@@ -5,7 +5,26 @@ import { GunLink } from "../gunLink";
 
 import * as Gun from "gun/gun";
 
-const gun = Gun();
+// TODO: use graphql codegen
+type Stub = {
+  id: string;
+};
+
+type Query = {
+  sampleQuery: Stub;
+};
+
+const typeDefs = `
+type Stub {
+  id: String
+}
+
+type Query {
+  sampleQuery: Stub
+}
+`;
+
+const gun = Gun<Query>();
 
 gun.get("sampleQuery").put({ id: "testing" });
 
@@ -25,37 +44,27 @@ const sampleMutation = gql`
   }
 `;
 
-const typeDefs = `
-type Stub {
-  id: String
-}
-
-type Query {
-  sampleQuery: Stub
-}
-`;
-
 const schema = typeDefs;
 
 describe("GunLink", () => {
-  it("calls next and then complete", done => {
+  it("calls next and then complete", (done) => {
     const next = jest.fn();
     const link = new GunLink({ schema: undefined, gun });
     const observable = execute(link, {
-      query: sampleQuery
+      query: sampleQuery,
     });
     observable.subscribe({
-      next: result => {
+      next: (result) => {
         expect(result).toEqual({
           data: {
             sampleQuery: {
-              id: "testing"
-            }
-          }
+              id: "testing",
+            },
+          },
         });
         done();
       },
-      error: error => expect(false)
+      error: (error) => expect(false),
     });
   });
 });
