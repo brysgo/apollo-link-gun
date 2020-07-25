@@ -1,6 +1,6 @@
 {
   "name": "apollo-link-gun",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.2",
   "description": "Use gundb as backend for ApolloClient",
   "author": "Bryan Goldstein <brysgo@gmail.com>",
   "license": "MIT",

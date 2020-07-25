@@ -1,5 +1,4 @@
-name: Test
-
+name: CI
 on:
   push:
     branches:
@@ -7,15 +6,105 @@ on:
   pull_request:
     branches:
       - master
-
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
         with:
-          node-version: 12
-      - run: yarn
+          node-version: "14"
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: 14-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+      - name: Install
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: yarn
+      - run: yarn build
       - run: yarn test
-
+  version-bump:
+    name: Bump Package Version
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache package.json
+        id: cache-package-json
+        uses: actions/cache@v2
+        with:
+          path: package.json
+          key: ${{ github.sha }}-package-json
+      - uses: "phips28/gh-action-bump-version@v7.1.4"
+        with:
+          tag-prefix: ""
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish-npm:
+    name: Publish NPM
+    needs: version-bump
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "14"
+          registry-url: https://registry.npmjs.org/
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: 14-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+      - name: Cache package.json
+        id: cache-package-json
+        uses: actions/cache@v2
+        with:
+          path: package.json
+          key: ${{ github.sha }}-package-json
+      - name: Install
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: NPM Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # publish-gpr:
+  #   name: Publish GPR
+  #   needs: version-bump
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2-beta
+  #       with:
+  #         node-version: "14"
+  #         registry-url: "https://npm.pkg.github.com"
+  #     - name: Cache node_modules
+  #       id: cache-modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: node_modules
+  #         key: 14-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+  #     - name: Cache package.json
+  #       id: cache-package-json
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: package.json
+  #         key: ${{ github.sha }}-package-json
+  #     - name: Install
+  #       if: steps.cache-modules.outputs.cache-hit != 'true'
+  #       run: yarn install --frozen-lockfile
+  #     - name: Build
+  #       run: yarn build
+  #     - name: GPR Publish
+  #       run: npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
